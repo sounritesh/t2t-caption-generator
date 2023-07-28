@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 from transformers import T5Tokenizer, T5ForConditionalGeneration
-from ..data.dataset import ProductLabelsDataset
+from data.dataset import ProductLabelsDataset
 from torch.utils.data import DataLoader
 import os
 import pandas as pd
