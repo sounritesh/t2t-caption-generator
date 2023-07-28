@@ -131,7 +131,8 @@ def run(params, df):
     print(f'[Initiating Fine Tuning]...\n')
 
     for epoch in range(model_params["TRAIN_EPOCHS"]):
-        train(epoch, tokenizer, model, device, training_loader, optimizer, scheduler)
+        loss = train(epoch, tokenizer, model, device, training_loader, optimizer, scheduler)
+        print(f"Epoch {epoch}: {loss}")
 
     print(f"[Saving Model]...\n")
     #Saving the model after training

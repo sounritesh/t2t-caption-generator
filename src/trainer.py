@@ -6,7 +6,7 @@ import pandas as pd
 
 def train(epoch, tokenizer, model, device, loader, optimizer, scheduler):
     model.train()
-
+    total_loss = 0
     for _, data in enumerate(loader, 0):
         y = data["target_ids"].to(device, dtype=torch.long)
         y_ids = y[:, :-1].contiguous()
@@ -30,14 +30,16 @@ def train(epoch, tokenizer, model, device, loader, optimizer, scheduler):
             )
         loss = outputs[0]
 
-        if _ % 10 == 0:
-            print("Epoch {}: {}".format(str(epoch), str(loss)))
+        # if _ % 10 == 0:
+        #     print("Epoch {}: {}".format(str(epoch), str(loss)))
 
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
         scheduler.step()
 
+        total_loss += loss.item()
+    return total_loss/len(loader)
 
 def validate(epoch, tokenizer, model, device, loader, params):
   model.eval()
