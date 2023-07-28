@@ -52,7 +52,7 @@ def validate(epoch, tokenizer, model, device, loader, params):
           generated_ids = model.generate(
               input_ids = ids,
               attention_mask = mask, 
-              max_length=params["max_length"], 
+              max_new_tokens=params["max_length"], 
               num_beams=params["num_beams"],
               repetition_penalty=params["repetition_penalty"], 
               length_penalty=params["length_penalty"], 
