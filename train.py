@@ -20,6 +20,7 @@ parser.add_argument("--factor", type=float, default=0.5)
 parser.add_argument("--step_size", type=int, default=5)
 
 parser.add_argument("--batch-size", type=int, default=8)
+parser.add_argument("--pseudo-val", action="store_true")
 
 parser.add_argument("--epochs", type=int, default=20)
 
@@ -73,7 +74,12 @@ def run(params):
     # Defining the train size. So 80% of the data will be used for training and the rest for validation. 
     train_size = 0.8
     train_dataset=df.sample(frac=train_size,random_state = model_params["SEED"])
-    val_dataset=df.drop(train_dataset.index).reset_index(drop=True)
+
+    if args.pseudo_val:
+        val_dataset=train_dataset
+    else:
+        val_dataset=df.drop(train_dataset.index).reset_index(drop=True)
+
     train_dataset = train_dataset.reset_index(drop=True)
 
     print(f"FULL Dataset: {df.shape}")
