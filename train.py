@@ -17,6 +17,7 @@ parser.add_argument("--model", type=str, default="t5-base")
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--lr", type=float, default=1e-4)
 parser.add_argument("--factor", type=float, default=0.5)
+parser.add_argument("--step_size", type=int, default=5)
 
 parser.add_argument("--epochs", type=int, default=20)
 
@@ -40,6 +41,7 @@ def run(params):
         "MAX_TARGET_TEXT_LENGTH":32,  
         "SEED": args.seed,
         "FACTOR": params["factor"],
+        "STEP_SIZE": params["step_size"]
     }
 
 
@@ -104,11 +106,11 @@ def run(params):
     # Defining the optimizer that will be used to tune the weights of the network in the training session. 
     optimizer = torch.optim.Adam(params =  model.parameters(), lr=model_params["LEARNING_RATE"])
 
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+    scheduler = torch.optim.lr_scheduler.StepLR(
         optimizer,
         mode="min",
-        factor=model_params["FACTOR"],
-        patience=1,
+        gamma=model_params["FACTOR"],
+        step_size = model_params["STEP_SIZE"]
     )
     # Training loop
     print(f'[Initiating Fine Tuning]...\n')
@@ -139,6 +141,7 @@ params = {
     "model_name": args.model,
     "lr": args.lr,
     "factor": args.factor,
+    "step_size": args.step_size
 }
 
 run(params=params)

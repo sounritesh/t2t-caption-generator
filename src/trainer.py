@@ -31,6 +31,7 @@ def train(epoch, tokenizer, model, device, loader, optimizer, scheduler):
         optimizer.step()
         scheduler.step()
 
+
 def validate(epoch, tokenizer, model, device, loader):
   model.eval()
   predictions = []
