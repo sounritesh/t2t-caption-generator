@@ -54,7 +54,7 @@ def run(params):
 
     # tokenzier for encoding the text
     tokenizer = AutoTokenizer.from_pretrained(model_params["MODEL"])
-    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.add_special_tokens({'pad_token': '[PAD]'})
 
     # Defining the model. We are using t5-base model and added a Language model layer on top for generation of Summary. 
     # Further this model is sent to device (GPU/TPU) for using the hardware.
