@@ -108,7 +108,6 @@ def run(params):
 
     scheduler = torch.optim.lr_scheduler.StepLR(
         optimizer,
-        mode="min",
         gamma=model_params["FACTOR"],
         step_size = model_params["STEP_SIZE"]
     )
