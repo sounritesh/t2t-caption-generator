@@ -25,7 +25,7 @@ parser.add_argument("--data-size", type=float, default=1.0)
 
 parser.add_argument("--gen-length", type=int, default=16)
 parser.add_argument("--num-beams", type=int, default=2)
-parser.add_argument("--repetition-penalty", type=float, default=2.5)
+parser.add_argument("--rep-penalty", type=float, default=2.5)
 parser.add_argument("--length-penalty", type=float, default=1.0)
 
 parser.add_argument("--epochs", type=int, default=20)
