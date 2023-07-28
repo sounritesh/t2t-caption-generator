@@ -19,6 +19,8 @@ parser.add_argument("--lr", type=float, default=1e-4)
 parser.add_argument("--factor", type=float, default=0.5)
 parser.add_argument("--step_size", type=int, default=5)
 
+parser.add_argument("--batch-size", type=int, default=8)
+
 parser.add_argument("--epochs", type=int, default=20)
 
 args = parser.parse_args()
@@ -32,8 +34,8 @@ def run(params):
 
     model_params={
         "MODEL": args.model,            
-        "TRAIN_BATCH_SIZE":8,         
-        "VALID_BATCH_SIZE":8,          
+        "TRAIN_BATCH_SIZE":args.batch_size,         
+        "VALID_BATCH_SIZE":args.batch_size,          
         "TRAIN_EPOCHS":args.epochs,             
         "VAL_EPOCHS":1,               
         "LEARNING_RATE":params["lr"],        
