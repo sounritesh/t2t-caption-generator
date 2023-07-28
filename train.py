@@ -71,7 +71,7 @@ def run(params, df):
 
     # Creation of Dataset and Dataloader
     # Defining the train size. So 80% of the data will be used for training and the rest for validation. 
-    df = df.sample(args.data_size)
+    df = df.sample(frac=args.data_size)
 
     if args.pseudo_val:
         train_size = 1.0
