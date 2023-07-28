@@ -23,6 +23,11 @@ parser.add_argument("--batch-size", type=int, default=8)
 parser.add_argument("--pseudo-val", action="store_true")
 parser.add_argument("--data-size", type=float, default=1.0)
 
+parser.add_argument("--gen-length", type=int, default=16)
+parser.add_argument("--num-beams", type=int, default=2)
+parser.add_argument("--repetition-penalty", type=float, default=2.5)
+parser.add_argument("--length-penalty", type=float, default=1.0)
+
 parser.add_argument("--epochs", type=int, default=20)
 
 args = parser.parse_args()
@@ -135,10 +140,16 @@ def run(params, df):
     tokenizer.save_pretrained(path)
 
 
+    generation_params = {
+        "max_length": args.gen_length,
+        "num_beams": args.num_beams,
+        "repetition_penalty": args.rep_penalty,
+        "length_penalty": args.length_penalty
+    }
     # evaluating test dataset
     print(f"[Initiating Validation]...\n")
     for epoch in range(model_params["VAL_EPOCHS"]):
-        predictions, actuals = validate(epoch, tokenizer, model, device, val_loader)
+        predictions, actuals = validate(epoch, tokenizer, model, device, val_loader, params=generation_params)
         final_df = pd.DataFrame({'Generated Text':predictions,'Actual Text':actuals})
         final_df.to_csv(os.path.join(args.output_dir,'predictions.csv'))
 

@@ -39,7 +39,7 @@ def train(epoch, tokenizer, model, device, loader, optimizer, scheduler):
         scheduler.step()
 
 
-def validate(epoch, tokenizer, model, device, loader):
+def validate(epoch, tokenizer, model, device, loader, params):
   model.eval()
   predictions = []
   actuals = []
@@ -52,10 +52,10 @@ def validate(epoch, tokenizer, model, device, loader):
           generated_ids = model.generate(
               input_ids = ids,
               attention_mask = mask, 
-              max_length=42, 
-              num_beams=2,
-              repetition_penalty=2.5, 
-              length_penalty=1.0, 
+              max_length=params["max_length"], 
+              num_beams=params["num_beams"],
+              repetition_penalty=params["repetition_penalty"], 
+              length_penalty=params["length_penalty"], 
               early_stopping=True
               )
           preds = [tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=True) for g in generated_ids]
