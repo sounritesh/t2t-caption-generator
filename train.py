@@ -28,9 +28,8 @@ parser.add_argument("--epochs", type=int, default=20)
 args = parser.parse_args()
 
 df = pd.read_csv(args.data_file)
-print(df.sample(10))
 
-def run(params):
+def run(params, df):
 
     device = 'cuda' if cuda.is_available() else 'cpu'
 
@@ -69,7 +68,6 @@ def run(params):
     print(f"[Data]: Reading data...\n")
 
     # Importing the raw dataset
-    print(df.head(2))
 
     # Creation of Dataset and Dataloader
     # Defining the train size. So 80% of the data will be used for training and the rest for validation. 
@@ -156,4 +154,4 @@ params = {
     "step_size": args.step_size
 }
 
-run(params=params)
+run(params=params, df=df)
