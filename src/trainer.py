@@ -15,12 +15,19 @@ def train(epoch, tokenizer, model, device, loader, optimizer, scheduler):
         ids = data["source_ids"].to(device, dtype=torch.long)
         mask = data["source_mask"].to(device, dtype=torch.long)
 
-        outputs = model(
-            input_ids=ids,
-            attention_mask=mask,
-            decoder_input_ids=y_ids,
-            labels=lm_labels,
-        )
+        try:
+            outputs = model(
+                input_ids=ids,
+                attention_mask=mask,
+                decoder_input_ids=y_ids,
+                labels=lm_labels,
+            )
+        except Exception as e:
+            outputs = model(
+                input_ids=ids,
+                attention_mask=mask,
+                labels=lm_labels,
+            )
         loss = outputs[0]
 
         if _ % 10 == 0:
