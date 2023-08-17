@@ -8,9 +8,7 @@ class ProductLabelsDataset(Dataset):
         self.source_len = source_len
         self.target_len = target_len
 
-        self.source_text = []
-        for _, row in self.dataframe.iterrows():
-            self.source_text.append(" ".join([row["a1"], row["a2"], row["a3"], row["a4"]]))
+        self.source_text = self.dataframe["source"].values
         self.target_text = self.dataframe["caption"].values
 
     def __len__(self):
